@@ -862,3 +862,8 @@ def enum(*sequential, **named):
     reverse = dict((value, key) for key, value in enums.items())
     enums['reverse_mapping'] = reverse
     return type('Enum', (), enums)
+
+
+def os_is_windows():
+    """Return whether the os is Windows"""
+    return os.name == 'nt'

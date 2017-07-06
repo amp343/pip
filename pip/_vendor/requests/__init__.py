@@ -47,14 +47,19 @@ __author__ = 'Kenneth Reitz'
 __license__ = 'Apache 2.0'
 __copyright__ = 'Copyright 2016 Kenneth Reitz'
 
+
+from pip.utils import os_is_windows
+
+
 # Attempt to enable urllib3's SNI support, if possible
-# Note: Patched by pip to prevent using the PyOpenSSL module. On Windows this
-#       prevents upgrading cryptography.
-# try:
-#     from .packages.urllib3.contrib import pyopenssl
-#     pyopenssl.inject_into_urllib3()
-# except ImportError:
-#     pass
+# Note: Patched by pip to prevent using the PyOpenSSL module when OS is Windows.
+#       Otherwise on Windows this prevents upgrading cryptography.
+if not os_is_windows():
+    try:
+        from .packages.urllib3.contrib import pyopenssl
+        pyopenssl.inject_into_urllib3()
+    except ImportError:
+        pass
 
 import warnings
 
